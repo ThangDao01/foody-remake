@@ -374,8 +374,15 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.scrollMenuEvent);
+    this.testApi();
   },
   methods: {
+    async testApi() {
+
+      var test = await this.$axios.$get('something')
+
+
+    },
     scrollMenuEvent() {
       var toolMenu = document.getElementById("menuFixed");
       var toolHMenu = document.getElementById("menu");
