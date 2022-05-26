@@ -60,9 +60,9 @@ li {
 }
 
 .tooltip-inner {
-  background-color: #ebebeb;
+  background-color: #ebebeb !important;
   /*background-color: red;*/
-  color: black;
+  color: black !important;
   height: 42px;
 }
 
