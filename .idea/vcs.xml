@@ -4,5 +4,6 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/foody-client" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/foody-client1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/laradock" vcs="Git" />
   </component>
 </project>
