@@ -12,7 +12,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - .:/var/www/html:ro
+      - .:/var/www
     depends_on:
       - laravel
     networks:
