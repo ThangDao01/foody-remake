@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RestaurantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/something',function (){
-    return 'abccccccc';
-});
+//Route::post('/test', [RestaurantController::class,'getRestaurantFilter']);
+
+Route::get('/caption-banner', [HomeController::class,'getCaptionBanner']);
+Route::get('/config', [HomeController::class,'getConfig']);
+Route::get('/current-province', [HomeController::class,'getProvince']);
+Route::post('/current-province', [HomeController::class,'setProvince']);
+
+
+Route::get('/deal-today', [RestaurantController::class,'getDealToday']);
+Route::get('/filter-option', [RestaurantController::class,'getFilterOption']);
+Route::post('/restaurant-filter', [RestaurantController::class,'getRestaurantFilter']);
+Route::get('/restaurant-home', [RestaurantController::class,'getAllRestaurantHome']);
+Route::post('/restaurant-home', [RestaurantController::class,'getAllRestaurantHome']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -50,15 +50,15 @@
         </nav>
         <div class="col-12 d-flex flex-wrap p-2" id="deal" style="padding:15px !important;">
           <div class="deal-xl col-md-4 col-lg-3 col-sm-6 p-1" v-if="ListRestaurantData!=null"
-               v-for="n in 10">
+               v-for="restaurant in ListRestaurantDeal">
             <div class=" p-0 bg-white ">
-              <img :src="ListRestaurantData[n].restaurant_thumbnail" width="100%" style="max-width: 226px" height="144">
+              <img :src="restaurant.restaurant_thumbnail" width="100%" style="max-width: 226px" height="144">
               <div class="item-detail p-2" style="height:61px;">
                 <div class="text-ellipsis" style="font-size:14px;font-weight: 700">
-                  {{ ListRestaurantData[n].restaurant_name }}
+                  {{ restaurant.restaurant_name }}
                 </div>
                 <div class="text-ellipsis" style="color: #777;font-size: 12px;text-overflow: ellipsis;">
-                  {{ ListRestaurantData[n].location_address }}
+                  {{ restaurant.location_address }}
                 </div>
               </div>
               <div class="p-2 border-top" style="height: 60px;">
@@ -127,32 +127,28 @@
             </ul>
             <div class="col-7 d-none d-lg-block p-1">
               <div class="col-12 d-flex flex-wrap justify-content-end p-0">
-                <select class="col-3 p-2 m-1">
-                  <option value="" selected="selected">- Danh mục -</option>
-                  <option value="">Sang trọng</option>
-                  <option value="">Buffet</option>
-                  <option value="">Nhà hàng</option>
-                  <option value="">Ăn chay</option>
+                <select class="col-3 p-2 m-1" v-on:change="renderData()" v-model="filterResult.category">
+                  <option value="" >- Danh mục -</option>
+                  <option :value="category.id" v-for="category in listFilter.category">{{ category.category_name }}
+                  </option>
                 </select>
-                <select class="col-3 p-2 m-1">
-                  <option value="" selected="selected">- Ẩm thực -</option>
-                  <option value="">Món Bắc</option>
-                  <option value="">Trung Hoa</option>
-                  <option value="">Ý</option>
-                  <option value="">Pháp</option>
+                <select class="col-3 p-2 m-1" v-on:change="renderData()" v-model="filterResult.subCategory">
+                  <option value="" >- Ẩm thực -</option>
+                  <option :value="subCategory.id" v-for="subCategory in listFilter.subCategory">
+                    {{ subCategory.category_name }}
+                  </option>
+
                 </select>
-                <select class="col-3 p-2 m-1">
-                  <option value="" selected="selected">- Quận/Huyện-</option>
-                  <option value="">Ba đình</option>
-                  <option value="">Nam từ liên</option>
-                  <option value="">Hà Đông</option>
-                  <option value="">Ba vì</option>
+                <select class="col-3 p-2 m-1" v-on:change="renderData()" v-model="filterResult.district">
+                  <option value="" >- Quận/Huyện-</option>
+                  <option :value="district.maqh" v-for="district in listFilter.district">{{ district.name }}</option>
+
                 </select>
               </div>
             </div>
           </div>
-          <div class="d-flex flex-wrap" id="menu">
-            <div class="col-xl-3 col-sm-6 p-1" v-if="ListRestaurantData!=null"
+          <div class="d-flex flex-wrap" id="menu" v-if="ListRestaurantData.length!==0">
+            <div class="col-xl-3 col-sm-6 p-1"
                  v-for="(restaurant,index) in ListRestaurantData" :key="index">
               <div class=" p-0 bg-white">
                 <div id="menu" style="position: relative;" v-on:mouseover="showById('menu'+index)"
@@ -199,8 +195,13 @@
               </div>
             </div>
           </div>
+          <div class="d-flex flex-wrap justify-content-center" id="menu" style="min-height: 300px;padding-top: 20px"
+               v-if="ListRestaurantData.length===0">
+            <div class="">Chưa có dữ liệu</div>
+          </div>
           <div class="col-12 "
-               style="background-color: #049ec5;height: 40px;text-align: center;color: white;padding: 10px 0;font-size: 14px">
+               style="background-color: #049ec5;height: 40px;text-align: center;color: white;padding: 10px 0;font-size: 14px"
+               v-if="ListRestaurantData!=null">
             Xem thêm
           </div>
         </div>
@@ -215,154 +216,37 @@ export default {
     return {
       maxDeal: 0,
       toolbarDisplay: '',
+      listFilter: {
+        category: {
+          id: '',
+          category_name: '',
+        },
+        subCategory: {
+          id: '',
+          category_name: '',
+        },
+        district: {
+          maqh: '',
+          name: '',
+        },
+      },
+      filterResult: {
+        category: '',
+        subCategory: '',
+        district: '',
+      },
+      ListRestaurantDeal: [
+        {
+          restaurant_name: '',
+          restaurant_thumbnail: '',
+          location_address: '',
+        },
+      ],
       ListRestaurantData: [
         {
-          restaurantName: "Gà Tươi Mạnh Hoạch - Trần Đại Nghĩa",
-          restaurant_thumbnail: "https://images.foody.vn/res/g111/1109781/prof/s576x330/foody-upload-api-foody-mobile-an-2ead5e11-211008123324.jpeg",
-          location_address: "171 Phố Trần Đại Nghĩa, P. Bách Khoa,  Quận Hai Bà Trưng, Hà Nội",
-        },
-        {
-          restaurantName: "Marukame Udon - Udon & Tempura - Vincom Phạm Ngọc Thạch",
-          restaurant_thumbnail: "https://images.foody.vn/res/g102/1012645/prof/s640x400/foody-upload-api-foody-mobile-18-200317120712.jpg",
-          location_address: "Tầng 5, Tầng L5, Lô L5 - 05 - 06 Vincom Phạm Ngọc Thạch, 2 Phạm Ngọc Thạch, P. Trung Tự, Đống Đa, Hà Nội"
-        },
-        {
-          restaurant_name: "KCC - Phở & Cơm Gà Xối Mắm - Kiều Mai\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g30/296541/prof/s640x400/foody-upload-api-foody-mobile-pho-kcc-191029141346.jpg",
-          location_address: "21 Kiều Mai, Bắc Từ Liêm, Hà Nội"
-        },
-        {
-          restaurant_name: "CHAN CHAN - Đồ Ăn Hàn Quốc",
-          restaurant_thumbnail: "https://images.foody.vn/res/g112/1111522/prof/s640x400/file_restaurant_photo_tkak_16414-17c51ed9-220106164959.jpg",
-          location_address: "20D Trần Quý Cáp, P. Văn Miếu, Đống Đa, Hà Nội"
-        },
-        {
-          restaurant_name: "Tiktak - Tiệm Gà Rán Hàn Quốc",
-          restaurant_thumbnail: "https://images.foody.vn/res/g86/854724/prof/s640x400/foody-upload-api-foody-mobile-ga1-jpg-181129142814.jpg",
-          location_address: "85 Láng Hạ, Đống Đa, Hà Nội"
-        },
-        {
-          restaurant_name: "L'amour Steak - Pizza & Pasta - Văn Quán",
-          restaurant_thumbnail: "https://images.foody.vn/res/g109/1083009/prof/s640x400/foody-upload-api-foody-mobile-im-9d946419-210617182849.jpeg",
-          location_address: "Tầng 1, Tòa New Skyline, KĐT Văn Quán, Đường 19/5, Hà Đông, Hà Nội\n"
-        },
-        {
-          restaurant_name: "Bánh Tráng Ăn Vặt Cô Béo",
-          restaurant_thumbnail: "https://images.foody.vn/res/g112/1112277/prof/s640x400/file_restaurant_photo_dvax_16501-7bb4292d-220417131155.jpeg",
-          location_address: "90 Kim Mã, Ba Đình, Hà Nội"
-        },
-        {
-          restaurant_name: "Quán Kiến - Món Ăn Việt Nam Độc Đáo - Tuệ Tĩnh\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g19/185755/prof/s640x400/foody-mobile-12196052_89005923109-757-635832838894777947.jpg",
-          location_address: "100 Tuệ Tĩnh, Hai Bà Trưng, Hà Nội\n"
-        },
-        {
-          restaurant_name: "Thỏ Quán - Bún Đậu Mẹt 39A\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g98/974024/prof/s640x400/foody-upload-api-foody-mobile-foody-mobile-hmmmmmm-191029110726.jpg",
-          location_address: "39A Ngõ 99 Cầu Diễn, Bắc Từ Liêm, Hà Nội\n"
-        },
-        {
-          restaurant_name: "Simisi - Korean Foods - Lương Thế Vinh\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g26/258433/prof/s640x400/image-6873dac3-200910115827.jpeg",
-          location_address: "19/A8 Đại Học Hà Nội (Ngõ 165 Lương Thế Vinh), Thanh Xuân, Hà Nội\n"
-        }, {
-          restaurantName: "Gà Tươi Mạnh Hoạch - Trần Đại Nghĩa",
-          restaurant_thumbnail: "https://images.foody.vn/res/g111/1109781/prof/s576x330/foody-upload-api-foody-mobile-an-2ead5e11-211008123324.jpeg",
-          location_address: "171 Phố Trần Đại Nghĩa, P. Bách Khoa,  Quận Hai Bà Trưng, Hà Nội",
-        },
-        {
-          restaurantName: "Marukame Udon - Udon & Tempura - Vincom Phạm Ngọc Thạch",
-          restaurant_thumbnail: "https://images.foody.vn/res/g102/1012645/prof/s640x400/foody-upload-api-foody-mobile-18-200317120712.jpg",
-          location_address: "Tầng 5, Tầng L5, Lô L5 - 05 - 06 Vincom Phạm Ngọc Thạch, 2 Phạm Ngọc Thạch, P. Trung Tự, Đống Đa, Hà Nội"
-        },
-        {
-          restaurant_name: "KCC - Phở & Cơm Gà Xối Mắm - Kiều Mai\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g30/296541/prof/s640x400/foody-upload-api-foody-mobile-pho-kcc-191029141346.jpg",
-          location_address: "21 Kiều Mai, Bắc Từ Liêm, Hà Nội"
-        },
-        {
-          restaurant_name: "CHAN CHAN - Đồ Ăn Hàn Quốc",
-          restaurant_thumbnail: "https://images.foody.vn/res/g112/1111522/prof/s640x400/file_restaurant_photo_tkak_16414-17c51ed9-220106164959.jpg",
-          location_address: "20D Trần Quý Cáp, P. Văn Miếu, Đống Đa, Hà Nội"
-        },
-        {
-          restaurant_name: "Tiktak - Tiệm Gà Rán Hàn Quốc",
-          restaurant_thumbnail: "https://images.foody.vn/res/g86/854724/prof/s640x400/foody-upload-api-foody-mobile-ga1-jpg-181129142814.jpg",
-          location_address: "85 Láng Hạ, Đống Đa, Hà Nội"
-        },
-        {
-          restaurant_name: "L'amour Steak - Pizza & Pasta - Văn Quán",
-          restaurant_thumbnail: "https://images.foody.vn/res/g109/1083009/prof/s640x400/foody-upload-api-foody-mobile-im-9d946419-210617182849.jpeg",
-          location_address: "Tầng 1, Tòa New Skyline, KĐT Văn Quán, Đường 19/5, Hà Đông, Hà Nội\n"
-        },
-        {
-          restaurant_name: "Bánh Tráng Ăn Vặt Cô Béo",
-          restaurant_thumbnail: "https://images.foody.vn/res/g112/1112277/prof/s640x400/file_restaurant_photo_dvax_16501-7bb4292d-220417131155.jpeg",
-          location_address: "90 Kim Mã, Ba Đình, Hà Nội"
-        },
-        {
-          restaurant_name: "Quán Kiến - Món Ăn Việt Nam Độc Đáo - Tuệ Tĩnh\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g19/185755/prof/s640x400/foody-mobile-12196052_89005923109-757-635832838894777947.jpg",
-          location_address: "100 Tuệ Tĩnh, Hai Bà Trưng, Hà Nội\n"
-        },
-        {
-          restaurant_name: "Thỏ Quán - Bún Đậu Mẹt 39A\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g98/974024/prof/s640x400/foody-upload-api-foody-mobile-foody-mobile-hmmmmmm-191029110726.jpg",
-          location_address: "39A Ngõ 99 Cầu Diễn, Bắc Từ Liêm, Hà Nội\n"
-        },
-        {
-          restaurant_name: "Simisi - Korean Foods - Lương Thế Vinh\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g26/258433/prof/s640x400/image-6873dac3-200910115827.jpeg",
-          location_address: "19/A8 Đại Học Hà Nội (Ngõ 165 Lương Thế Vinh), Thanh Xuân, Hà Nội\n"
-        }, {
-          restaurantName: "Gà Tươi Mạnh Hoạch - Trần Đại Nghĩa",
-          restaurant_thumbnail: "https://images.foody.vn/res/g111/1109781/prof/s576x330/foody-upload-api-foody-mobile-an-2ead5e11-211008123324.jpeg",
-          location_address: "171 Phố Trần Đại Nghĩa, P. Bách Khoa,  Quận Hai Bà Trưng, Hà Nội",
-        },
-        {
-          restaurantName: "Marukame Udon - Udon & Tempura - Vincom Phạm Ngọc Thạch",
-          restaurant_thumbnail: "https://images.foody.vn/res/g102/1012645/prof/s640x400/foody-upload-api-foody-mobile-18-200317120712.jpg",
-          location_address: "Tầng 5, Tầng L5, Lô L5 - 05 - 06 Vincom Phạm Ngọc Thạch, 2 Phạm Ngọc Thạch, P. Trung Tự, Đống Đa, Hà Nội"
-        },
-        {
-          restaurant_name: "KCC - Phở & Cơm Gà Xối Mắm - Kiều Mai\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g30/296541/prof/s640x400/foody-upload-api-foody-mobile-pho-kcc-191029141346.jpg",
-          location_address: "21 Kiều Mai, Bắc Từ Liêm, Hà Nội"
-        },
-        {
-          restaurant_name: "CHAN CHAN - Đồ Ăn Hàn Quốc",
-          restaurant_thumbnail: "https://images.foody.vn/res/g112/1111522/prof/s640x400/file_restaurant_photo_tkak_16414-17c51ed9-220106164959.jpg",
-          location_address: "20D Trần Quý Cáp, P. Văn Miếu, Đống Đa, Hà Nội"
-        },
-        {
-          restaurant_name: "Tiktak - Tiệm Gà Rán Hàn Quốc",
-          restaurant_thumbnail: "https://images.foody.vn/res/g86/854724/prof/s640x400/foody-upload-api-foody-mobile-ga1-jpg-181129142814.jpg",
-          location_address: "85 Láng Hạ, Đống Đa, Hà Nội"
-        },
-        {
-          restaurant_name: "L'amour Steak - Pizza & Pasta - Văn Quán",
-          restaurant_thumbnail: "https://images.foody.vn/res/g109/1083009/prof/s640x400/foody-upload-api-foody-mobile-im-9d946419-210617182849.jpeg",
-          location_address: "Tầng 1, Tòa New Skyline, KĐT Văn Quán, Đường 19/5, Hà Đông, Hà Nội\n"
-        },
-        {
-          restaurant_name: "Bánh Tráng Ăn Vặt Cô Béo",
-          restaurant_thumbnail: "https://images.foody.vn/res/g112/1112277/prof/s640x400/file_restaurant_photo_dvax_16501-7bb4292d-220417131155.jpeg",
-          location_address: "90 Kim Mã, Ba Đình, Hà Nội"
-        },
-        {
-          restaurant_name: "Quán Kiến - Món Ăn Việt Nam Độc Đáo - Tuệ Tĩnh\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g19/185755/prof/s640x400/foody-mobile-12196052_89005923109-757-635832838894777947.jpg",
-          location_address: "100 Tuệ Tĩnh, Hai Bà Trưng, Hà Nội\n"
-        },
-        {
-          restaurant_name: "Thỏ Quán - Bún Đậu Mẹt 39A\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g98/974024/prof/s640x400/foody-upload-api-foody-mobile-foody-mobile-hmmmmmm-191029110726.jpg",
-          location_address: "39A Ngõ 99 Cầu Diễn, Bắc Từ Liêm, Hà Nội\n"
-        },
-        {
-          restaurant_name: "Simisi - Korean Foods - Lương Thế Vinh\n",
-          restaurant_thumbnail: "https://images.foody.vn/res/g26/258433/prof/s640x400/image-6873dac3-200910115827.jpeg",
-          location_address: "19/A8 Đại Học Hà Nội (Ngõ 165 Lương Thế Vinh), Thanh Xuân, Hà Nội\n"
+          restaurant_name: '',
+          restaurant_thumbnail: '',
+          location_address: '',
         },
       ]
     }
@@ -374,35 +258,51 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.scrollMenuEvent);
-    this.testApi();
+    this.initData();
   },
   methods: {
-    async testApi() {
-
-      var test = await this.$axios.$get('something')
-
-
+    initData() {
+      this.getDealToday();
+      this.getRestaurantData();
+      this.getFilterOption();
+    },
+    async renderData() {
+      const uri = 'restaurant-filter'
+      console.log(this.filterResult);
+      this.ListRestaurantData = await this.$axios.$post(uri, this.filterResult);
+      console.log(this.ListRestaurantData)
+    },
+    async getDealToday() {
+      this.ListRestaurantDeal = await this.$axios.$get('deal-today');
+    },
+    async getRestaurantData() {
+      this.ListRestaurantData = await this.$axios.$get('restaurant-home');
+      console.log(await this.$axios.$get('restaurant-home'))
+    },
+    async getFilterOption() {
+      this.listFilter = await this.$axios.$get('filter-option')
+      console.log(this.listFilter)
     },
     scrollMenuEvent() {
-      var toolMenu = document.getElementById("menuFixed");
-      var toolHMenu = document.getElementById("menu");
-      var toolData = document.getElementById("dataScroll");
+      var toolMenu = document.getElementById('menuFixed');
+      var toolHMenu = document.getElementById('menu');
+      var toolData = document.getElementById('dataScroll');
       var sticky2 = toolHMenu.offsetTop;
       if (window.pageYOffset > sticky2) {
-        toolMenu.classList.add("menuFixed");
-        toolData.classList.add("menuFixed");
+        toolMenu.classList.add('menuFixed');
+        toolData.classList.add('menuFixed');
       } else {
-        toolMenu.classList.remove("menuFixed");
-        toolData.classList.remove("menuFixed");
+        toolMenu.classList.remove('menuFixed');
+        toolData.classList.remove('menuFixed');
       }
     },
     showById(id) {
       var item = document.getElementById(id)
-      item.style.display = "block"
+      item.style.display = 'block'
     },
     hideById(id) {
       var item = document.getElementById(id)
-      item.style.display = "none"
+      item.style.display = 'none'
     }
   }
 }

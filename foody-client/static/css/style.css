@@ -309,9 +309,9 @@ img {
 }
 @media (min-width: 321px) and (max-width: 992px) {
   .col-ssm-6 {
-    -ms-flex: 0 0 50%;
-    flex: 0 0 50%;
-    max-width: 50%;
+    -ms-flex: 0 0 50% !important;
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
   }
 }
 

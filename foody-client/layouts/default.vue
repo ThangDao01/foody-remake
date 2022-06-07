@@ -35,11 +35,13 @@
               class="btn dropdown-toggle text-placeholder"
               data-toggle="dropdown"
               style="color: #999;">
-              Hà Nội
+              {{provinces.name}}
             </button>
             <div class="dropdown-menu">
               <h1 class="dropdown-header"><i class="fa fa-globe" aria-hidden="true"></i>Tỉnh Thành</h1>
-              <NuxtLink to="#"><a class="dropdown-item">TP HCM</a></NuxtLink>
+<!--              <select v-on:change="setProvinces()"></select>-->
+              <a class="dropdown-item" v-on:click="setProvinces('01','Hà Nội')">Hà Nội</a>
+              <a class="dropdown-item" v-on:click="setProvinces('79','TP HCM')">TP HCM</a>
             </div>
           </div>
           <div class="dropdown border d-none d-md-block" style="color: #777">
@@ -118,19 +120,30 @@
       <!--      <div><img src="https://images.foody.vn/biz_banner/foody-675x355_foodyappbanner-636530746968443602.jpg" alt=""></div>-->
       <!--      <div><img src="https://media.foody.vn/images/beauty-upload-api-che-co-linh-675-x-355-220425115812.jpg" alt=""></div>-->
       <!--    </div>-->
-      <div class="slick-auto-3">
-        <div><img src="https://images.foody.vn/biz_banner/foody-675x355_foodyappbanner-636530746968443602.jpg" alt="">
-          <div class="slick-slider"></div>
+      <!--      <div class="slick-auto-3">-->
+      <!--        <div><img src="https://images.foody.vn/biz_banner/foody-675x355_foodyappbanner-636530746968443602.jpg" alt="">-->
+      <!--          <div class="slick-slider"></div>-->
+      <!--        </div>-->
+      <!--        <div><img src="https://media.foody.vn/images/beauty-upload-api-che-co-linh-675-x-355-220425115812.jpg" alt="">-->
+      <!--        </div>-->
+      <!--        <div><img src="https://images.foody.vn/biz_banner/foody-675x355_foodyappbanner-636530746968443602.jpg" alt="">-->
+      <!--        </div>-->
+      <!--        <div><img src="https://media.foody.vn/images/beauty-upload-api-che-co-linh-675-x-355-220425115812.jpg" alt="">-->
+      <!--        </div>-->
+      <!--        <div><img src="https://images.foody.vn/biz_banner/foody-675x355_foodyappbanner-636530746968443602.jpg" alt="">-->
+      <!--        </div>-->
+      <!--        <div><img src="https://media.foody.vn/images/beauty-upload-api-che-co-linh-675-x-355-220425115812.jpg" alt="">-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <div  class="slick-auto-3" >
+        <div v-for="caption in captionBanner" >
+          <img :src="caption.caption_image" alt="">
         </div>
-        <div><img src="https://media.foody.vn/images/beauty-upload-api-che-co-linh-675-x-355-220425115812.jpg" alt="">
+        <div v-for="caption in captionBanner" >
+          <img :src="caption.caption_image" alt="">
         </div>
-        <div><img src="https://images.foody.vn/biz_banner/foody-675x355_foodyappbanner-636530746968443602.jpg" alt="">
-        </div>
-        <div><img src="https://media.foody.vn/images/beauty-upload-api-che-co-linh-675-x-355-220425115812.jpg" alt="">
-        </div>
-        <div><img src="https://images.foody.vn/biz_banner/foody-675x355_foodyappbanner-636530746968443602.jpg" alt="">
-        </div>
-        <div><img src="https://media.foody.vn/images/beauty-upload-api-che-co-linh-675-x-355-220425115812.jpg" alt="">
+        <div v-for="caption in captionBanner" >
+          <img :src="caption.caption_image" alt="">
         </div>
       </div>
       <div class="col-5 m-auto" style="height: 75px;justify-items: center">
@@ -139,29 +152,17 @@
              width="40px"
              alt="">
         <div class="slick-auto-detail" style="padding-top: 20px">
-          <div class="col-12 text-white text-center">
-            <div class="slick-title">Foody App trên Mobile</div>
-            <p class="slick-desc">Khám phá, đặt bàn, giao tận nơi</p>
+          <div class="col-12 text-white text-center" v-for="caption in captionBanner" >
+            <div class="slick-title">{{ caption.caption_title }}</div>
+            <p class="slick-desc">{{ caption.caption_desc }}</p>
           </div>
-          <div class="col-12 text-white text-center">
-            <div class="slick-title">Chè Thái Cô linh</div>
-            <p>Giảm 70k cho đơn tối thiểu 200k</p>
+          <div class="col-12 text-white text-center" v-for="caption in captionBanner">
+            <div class="slick-title">{{ caption.caption_title }}</div>
+            <p class="slick-desc">{{ caption.caption_desc }}</p>
           </div>
-          <div class="col-12 text-white text-center">
-            <div class="slick-title">Foody App trên Mobile</div>
-            <p class="slick-desc">Khám phá, đặt bàn, giao tận nơi</p>
-          </div>
-          <div class="col-12 text-white text-center">
-            <div class="slick-title">Chè Thái Cô linh</div>
-            <p class="slick-desc">Giảm 70k cho đơn tối thiểu 200k</p>
-          </div>
-          <div class="col-12 text-white text-center">
-            <div class="slick-title">Foody App trên Mobile</div>
-            <p class="slick-desc">Khám phá, đặt bàn, giao tận nơi</p>
-          </div>
-          <div class="col-12 text-white text-center">
-            <div class="slick-title">Chè Thái Cô linh</div>
-            <p class="slick-desc">Giảm 70k cho đơn tối thiểu 200k</p>
+          <div class="col-12 text-white text-center" v-for="caption in captionBanner" >
+            <div class="slick-title">{{ caption.caption_title }}</div>
+            <p class="slick-desc">{{ caption.caption_desc }}</p>
           </div>
         </div>
         <img class="slick-next btn-slide1 float-right "
@@ -438,19 +439,16 @@
       </div>
       <div class="container text-center" style="padding-top: 50px;color: #999">
         <div>
-          Công Ty Cổ Phần Foody, Lầu G, Tòa nhà Jabes 1, 244 đường Cống Quỳnh, phường Phạm Ngũ Lão, Quận 1, TP.HCM
+          {{ config.company_location }}
         </div>
         <div>
-          Điện thoại: 1900 2042 Email: info@foody.vn
+          Điện thoại: {{ config.company_phone }} Email: {{ config.company_email }}
         </div>
-        <div>
-          Giấy CN ĐKDN số 0311828036 do Sở Kế hoạch và Đầu tư TP.HCM cấp ngày 11/6/2012, sửa đổi lần thứ 23, ngày
-          10/12/2020
+        <div v-for="(policy,index) in config.company_policy" :key="index">
+          {{ policy }}
         </div>
-        <div>
-          Giấy phép thiết lập MXH trên mạng số 363/GP-BTTTT do Bộ Thông tin và Truyền thông cấp ngày 30/6/2016 Người
-          chịu
-          trách nhiệm: Đặng Hoàng Minh.
+        <div v-if="config.more_information!= null" v-for="(information,index) in config.more_information" :key="index">
+          {{ information.name }} : {{ information.data }}
         </div>
         <br>
       </div>
@@ -459,31 +457,117 @@
 </template>
 <script>
 export default {
-  name: "default_layout",
+  name: 'default_layout',
+  data() {
+    return {
+      provinces:{
+        name:'Hà Nội',
+        id:'01',
+      },
+      captionBanner: [
+        {
+          caption_image: 'https://images.foody.vn/biz_banner/foody-675x355_foodyappbanner-636530746968443602.jpg',
+          caption_title: 'Foody App trên Mobile',
+          caption_desc: 'Khám phá, đặt bàn, giao tận nơi',
+          status: '1',
+          link_action: 'https://www.foody.vn/ung-dung-mobile',
+        },
+        {
+          caption_image: 'https://media.foody.vn/images/beauty-upload-api-che-co-linh-675-x-355-220425115812.jpg',
+          caption_title: 'Chè Thái Cô linh',
+          caption_desc: 'Giảm 70k cho đơn tối thiểu 200k',
+          status: '1',
+          link_action: 'https://www.foody.vn',
+        },
+       ],
+      config: {
+        company_phone: '',
+        company_policy: '',
+        company_location: '',
+        company_email: '',
+        more_information: '',
+        link_page: '',
+        link_download: '',
+      },
+    }
+  },
   head() {
     return {
       title: 'foody',
       link: [
-        {rel: 'stylesheet', href: '/css/style.css'},
-        {rel: 'stylesheet', href: '/js/slick/slick.css'},
-        {rel: 'stylesheet', href: '/js/slick/slick-theme.css'},
-        {rel: 'stylesheet', href: '/css/bootstrap.min.css'},
-        {rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'},
+        {
+          rel: 'stylesheet',
+          href: '/css/style.css'
+        },
+        {
+          rel: 'stylesheet',
+          href: '/js/slick/slick.css'
+        },
+        {
+          rel: 'stylesheet',
+          href: '/js/slick/slick-theme.css'
+        },
+        {
+          rel: 'stylesheet',
+          href: '/css/bootstrap.min.css'
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'
+        },
       ],
       script: [
-        {hid: 'stripe', src: '/js/jquery/3.6.0/jquery.min.js', defer: true},
-        {hid: 'stripe', src: '/js/jquery/jquery.slim.min.js', defer: true},
-        {hid: 'stripe', src: '/js/popper.min.js', defer: true},
-        {hid: 'stripe', src: '/js/bootstrap.bundle.min.js', defer: true},
-        {hid: 'stripe', src: '/js/slick/slick.min.js', defer: true}
+        {
+          hid: 'stripe',
+          src: '/js/jquery/3.6.0/jquery.min.js',
+          defer: true
+        },
+        {
+          hid: 'stripe',
+          src: '/js/jquery/jquery.slim.min.js',
+          defer: true
+        },
+        {
+          hid: 'stripe',
+          src: '/js/popper.min.js',
+          defer: true
+        },
+        {
+          hid: 'stripe',
+          src: '/js/bootstrap.bundle.min.js',
+          defer: true
+        },
+        {
+          hid: 'stripe',
+          src: '/js/slick/slick.min.js',
+          defer: true
+        }
       ]
     }
   },
   mounted() {
-    this.setEvent();
     window.addEventListener('scroll', this.scrollEvent);
+    this.initData();
+    this.setEvent();
+
   },
   methods: {
+    initData() {
+      this.getConfig();
+      this.getCaptionBanner();
+      this.getProvinces();
+      // this.setEvent();
+    },
+    async getCaptionBanner() {
+      this.captionBanner = await this.$axios.$get('caption-banner');
+      // this.captionBanner = await this.$axios.$get('caption-banner');
+      // console.log(this.captionBanner)
+      // console.log(await this.$axios.$get('caption-banner'))
+    },
+    async getConfig() {
+      this.config = await this.$axios.$get('config')
+      this.config.company_policy = JSON.parse(this.config.company_policy)
+    },
     setEvent() {
       this.slickBanner();
       $('[data-toggle="tooltip"]').tooltip();
@@ -499,6 +583,7 @@ export default {
         variableWidth: true,
         slidesToShow: itemSlick,
         slidesToScroll: 1,
+        infinite: true,
         autoplay: true,
         asNavFor: '.slick-auto-detail',
         centerMode: true,
@@ -513,41 +598,52 @@ export default {
         autoplaySpeed: 2000,
       });
       $('.slick-prev').click(function () {
-        $(".slick-auto-3").slick('slickPrev');
+        $('.slick-auto-3').slick('slickPrev');
       });
       $('.slick-next').click(function () {
-        $(".slick-auto-3").slick('slickNext');
+        $('.slick-auto-3').slick('slickNext');
       });
     },
     scrollEvent() {
-      var toolHeader = document.getElementById("toolbarFixed");
+      var toolHeader = document.getElementById('toolbarFixed');
       var sticky = toolHeader.offsetTop;
-      var toolMenu = document.getElementById("menuFixed");
-      var toolHMenu = document.getElementById("menu");
-      var toolData = document.getElementById("dataScroll");
+      var toolMenu = document.getElementById('menuFixed');
+      var toolHMenu = document.getElementById('menu');
+      var toolData = document.getElementById('dataScroll');
       var sticky2 = toolHMenu.offsetTop;
-      var toolNav = document.getElementById("tool");
+      var toolNav = document.getElementById('tool');
       if (window.pageYOffset > sticky) {
-        toolHeader.classList.add("isScroll");
+        toolHeader.classList.add('isScroll');
       } else {
-        toolHeader.classList.remove("isScroll");
+        toolHeader.classList.remove('isScroll');
       }
       if (window.pageYOffset > sticky2) {
-        toolMenu.classList.add("menuFixed");
-        toolData.classList.add("menuFixed");
+        toolMenu.classList.add('menuFixed');
+        toolData.classList.add('menuFixed');
       } else {
-        toolMenu.classList.remove("menuFixed");
-        toolData.classList.remove("menuFixed");
+        toolMenu.classList.remove('menuFixed');
+        toolData.classList.remove('menuFixed');
       }
 
       if (window.pageYOffset > screen.height) {
-        toolNav.style.display = "block";
+        toolNav.style.display = 'block';
       } else {
-        toolNav.style.display = "none";
+        toolNav.style.display = 'none';
       }
     },
     setElement() {
       this.deal = 12
+    },
+    async getProvinces() {
+      const uri = 'current-province'
+      this.provinces = await this.$axios.$get(uri);
+    },
+    async setProvinces(id,name) {
+      const uri = 'current-province'
+      this.provinces.name = name;
+      this.provinces.id = await this.$axios.$post(uri, {
+        provinces:id
+      });
     },
     btnToTop() {
       document.body.scrollTop = 0;
@@ -557,4 +653,3 @@ export default {
   }
 }
 </script>
-

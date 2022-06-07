@@ -6,7 +6,7 @@ module.exports = {
   },
   parserOptions: {
     parser: '@babel/eslint-parser',
-    requireConfigFile: false,
+    requireConfigFile: true
   },
   extends: [
     '@nuxtjs',
@@ -28,7 +28,6 @@ module.exports = {
     'vue/attributes-order': 'off',
     'object-curly-spacing': 'off',
     'vue/max-attributes-per-line': 'off',
-    'space-before-function-paren': 'off',
-    'semi': 'off',
+    'space-before-function-paren': 'off'
   }
 }

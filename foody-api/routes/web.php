@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/ascascasscascasc', function () {
-    dd(1027012012093);
-});
+Route::get('/test', [RestaurantController::class,'getAllRestaurant']);
 
