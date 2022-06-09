@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::post('/test', [RestaurantController::class,'getRestaurantFilter']);
 
 Route::get('/caption-banner', [HomeController::class,'getCaptionBanner']);
 Route::get('/config', [HomeController::class,'getConfig']);
@@ -24,10 +23,9 @@ Route::get('/current-province', [HomeController::class,'getProvince']);
 Route::post('/current-province', [HomeController::class,'setProvince']);
 
 
-Route::get('/deal-today', [RestaurantController::class,'getDealToday']);
-Route::get('/filter-option', [RestaurantController::class,'getFilterOption']);
+Route::post('/deal-today', [RestaurantController::class,'getDealToday']);
+Route::post('/filter-option', [RestaurantController::class,'getFilterOption']);
 Route::post('/restaurant-filter', [RestaurantController::class,'getRestaurantFilter']);
-Route::get('/restaurant-home', [RestaurantController::class,'getAllRestaurantHome']);
 Route::post('/restaurant-home', [RestaurantController::class,'getAllRestaurantHome']);
 
 

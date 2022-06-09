@@ -67,6 +67,9 @@
               </div>
             </div>
           </div>
+          <div class="deal-xl col-md-4 col-lg-3 col-sm-6 p-1" v-if="ListRestaurantData!=null">
+            Không có dữ liệu
+          </div>
         </div>
       </div>
     </div>
@@ -128,19 +131,19 @@
             <div class="col-7 d-none d-lg-block p-1">
               <div class="col-12 d-flex flex-wrap justify-content-end p-0">
                 <select class="col-3 p-2 m-1" v-on:change="renderData()" v-model="filterResult.category">
-                  <option value="" >- Danh mục -</option>
+                  <option value="">- Danh mục -</option>
                   <option :value="category.id" v-for="category in listFilter.category">{{ category.category_name }}
                   </option>
                 </select>
                 <select class="col-3 p-2 m-1" v-on:change="renderData()" v-model="filterResult.subCategory">
-                  <option value="" >- Ẩm thực -</option>
+                  <option value="">- Ẩm thực -</option>
                   <option :value="subCategory.id" v-for="subCategory in listFilter.subCategory">
                     {{ subCategory.category_name }}
                   </option>
 
                 </select>
                 <select class="col-3 p-2 m-1" v-on:change="renderData()" v-model="filterResult.district">
-                  <option value="" >- Quận/Huyện-</option>
+                  <option value="">- Quận/Huyện-</option>
                   <option :value="district.maqh" v-for="district in listFilter.district">{{ district.name }}</option>
 
                 </select>
@@ -229,11 +232,13 @@ export default {
           maqh: '',
           name: '',
         },
+        provinces: ''
       },
       filterResult: {
         category: '',
         subCategory: '',
         district: '',
+        provinces: '',
       },
       ListRestaurantDeal: [
         {
@@ -268,20 +273,23 @@ export default {
     },
     async renderData() {
       const uri = 'restaurant-filter'
-      console.log(this.filterResult);
+      this.filterResult.provinces = localStorage.provinces_id
       this.ListRestaurantData = await this.$axios.$post(uri, this.filterResult);
-      console.log(this.ListRestaurantData)
     },
     async getDealToday() {
-      this.ListRestaurantDeal = await this.$axios.$get('deal-today');
+      this.ListRestaurantDeal = await this.$axios.$post('deal-today', {
+        provincesId:localStorage.provinces_id
+      });
     },
     async getRestaurantData() {
-      this.ListRestaurantData = await this.$axios.$get('restaurant-home');
-      console.log(await this.$axios.$get('restaurant-home'))
+      this.ListRestaurantData = await this.$axios.$post('restaurant-home', {
+        provincesId:localStorage.provinces_id
+      });
     },
     async getFilterOption() {
-      this.listFilter = await this.$axios.$get('filter-option')
-      console.log(this.listFilter)
+      this.listFilter = await this.$axios.$post('filter-option', {
+        provincesId:localStorage.provinces_id
+      });
     },
     scrollMenuEvent() {
       var toolMenu = document.getElementById('menuFixed');

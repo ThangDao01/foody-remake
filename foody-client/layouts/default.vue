@@ -461,8 +461,8 @@ export default {
   data() {
     return {
       provinces:{
-        name:'Hà Nội',
-        id:'01',
+        name:'',
+        id:'',
       },
       captionBanner: [
         {
@@ -556,8 +556,10 @@ export default {
       this.getConfig();
       this.getCaptionBanner();
       this.getProvinces();
+
       // this.setEvent();
     },
+
     async getCaptionBanner() {
       this.captionBanner = await this.$axios.$get('caption-banner');
       // this.captionBanner = await this.$axios.$get('caption-banner');
@@ -631,12 +633,15 @@ export default {
         toolNav.style.display = 'none';
       }
     },
-    setElement() {
-      this.deal = 12
-    },
     async getProvinces() {
-      const uri = 'current-province'
-      this.provinces = await this.$axios.$get(uri);
+      if (!localStorage.provinces_id || !localStorage.provinces_name){
+        localStorage.provinces_name = 'Hà Nội';
+        localStorage.provinces_id = '01';
+      }
+      this.provinces={
+        name:localStorage.provinces_name,
+        id:localStorage.provinces_id,
+      }
     },
     async setProvinces(id,name) {
       const uri = 'current-province'
@@ -644,6 +649,9 @@ export default {
       this.provinces.id = await this.$axios.$post(uri, {
         provinces:id
       });
+      localStorage.provinces_id = this.provinces.id
+      localStorage.provinces_name = this.provinces.name
+      location.reload();
     },
     btnToTop() {
       document.body.scrollTop = 0;

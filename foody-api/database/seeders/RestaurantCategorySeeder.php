@@ -119,6 +119,18 @@ class RestaurantCategorySeeder extends Seeder
                 'restaurant_id' => '9',
                 'category_id' => '13',
             ],
+            [
+                'restaurant_id' => '10',
+                'category_id' => '1',
+            ],
+            [
+                'restaurant_id' => '10',
+                'category_id' => '2',
+            ],
+            [
+                'restaurant_id' => '10',
+                'category_id' => '10',
+            ],
         ]);
     }
 }

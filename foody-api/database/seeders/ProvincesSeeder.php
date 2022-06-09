@@ -19,12 +19,12 @@ class ProvincesSeeder extends Seeder
         DB::table('provinces')->insert([
             [
                 'matp'=>'01',
-                'name'=>'Thành phố Hà Nội',
+                'name'=>'Hà Nội',
                 'type'=>'Thành phố Trung ương',
             ],
             [
                 'matp'=>'79',
-                'name'=>'Thành phố Hồ Chí Minh',
+                'name'=>'TP HCM',
                 'type'=>'Thành phố Trung ương',
             ],
         ]);

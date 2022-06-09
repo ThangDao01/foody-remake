@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\Session;
 class RestaurantController extends Controller
 {
     //
+    public function test2()
+    {
+     return Session::get("provincesId");
+    }
     public function test()
     {
 //        return Restaurant::all();
@@ -55,31 +59,30 @@ class RestaurantController extends Controller
 
     }
 
-    public function getAllRestaurantHome()
+    public function getAllRestaurantHome(Request $request)
     {
-//        return Restaurant::all('is_branch');
-        $currentProvince = '01';
-        if (Session::has('provinces')) {
-            $currentProvince = Session::get('provinces');
+        $provincesId = $request->get('provincesId');
+        if (!$provincesId){
+            $provincesId = '01';
         }
         return Restaurant::select('restaurant_name', 'restaurant_thumbnail', 'location_address')
-            ->where('location_province', $currentProvince)
+            ->where('location_province', $provincesId )
             ->where('is_branch', 1)->get();
     }
 
-    public function getDealToday()
+    public function getDealToday(Request $request)
     {
         $now = Carbon::now('Asia/Ho_Chi_Minh');
         RestaurantDiscount::where('time_start', '<=', $now)->where('time_end', '>=', $now)->get();
         $listResId = RestaurantDiscount::select('restaurant_id')->where('time_start', '<=', $now)->where('time_end', '>=', $now)->get()->pluck('restaurant_id');
-        return Restaurant::whereIn('id', $listResId)->get();
+        return Restaurant::whereIn('id', $listResId)->where('location_province',$request->get('provincesId'))->get();
     }
 
-    public function getFilterOption()
+    public function getFilterOption(Request $request)
     {
-        $currentProvince = '01';
-        if (Session::has('provinces')) {
-            $currentProvince = Session::get('provinces');
+        $currentProvince = $request->get('provincesId');
+        if (!$currentProvince) {
+            $currentProvince = '01';
         }
         $district = District::select('maqh', 'name')->where('matp', $currentProvince)->orderBy('name', 'asc')->get();
         $category = Category::select('id', 'category_name')->where('type', 1)->get();
@@ -88,6 +91,7 @@ class RestaurantController extends Controller
             'category' => $category,
             'subCategory' => $subCategory,
             'district' => $district,
+            'provinces' => $request->get('provincesId'),
         ]);
     }
 
@@ -96,11 +100,13 @@ class RestaurantController extends Controller
         $cate = $request->get('category');
         $subCate = $request->get('subCategory');
         $district = $request->get('district');
+        $provinces = $request->get('provinces');
         $resByCate = [];
         $resBySubCate = [];
         if (!$cate && !$subCate && !$district) {
-            return $this->getAllRestaurantHome();
-        }else if (!$cate && !$subCate) {
+            return Restaurant::where('location_province', $provinces)
+                ->where('is_branch', 1)->get();
+        } else if (!$cate && !$subCate) {
             return Restaurant::where('location_district', $district)->get();
         }
         if ($cate) {
