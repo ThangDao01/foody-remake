@@ -26,7 +26,6 @@ $ docker-compose exec laravel sh
 # copy file .env.example to .env
 
 $ cp .env.example .env
-$ composer i
 $ php artisan migrate:fresh --seed
 
 ```
