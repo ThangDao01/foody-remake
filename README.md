@@ -27,6 +27,7 @@ $ docker-compose exec laravel sh
 
 $ cp .env.example .env
 $ composer i
+$ php artisan migrate:fresh --seed
 
 ```
 [localhost:8080](http://localhost:8080/).
