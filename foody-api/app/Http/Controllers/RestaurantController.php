@@ -23,10 +23,6 @@ use Illuminate\Support\Facades\Session;
 class RestaurantController extends Controller
 {
     //
-    public function test2()
-    {
-     return Session::get("provincesId");
-    }
 
 
     public function getAllRestaurantHome(Request $request)

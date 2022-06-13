@@ -22,13 +22,7 @@ class HomeController extends Controller
     {
         return Config::first();
     }
-
-    public function test()
-    {
-        Session::put("provincesId", '01');
-        return Session::get("provincesId");
-
-    }
+    
     public function getProvince()
     {
         if (!Session::has("provincesId")) {
