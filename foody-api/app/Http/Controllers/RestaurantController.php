@@ -27,37 +27,7 @@ class RestaurantController extends Controller
     {
      return Session::get("provincesId");
     }
-    public function test()
-    {
-//        return Restaurant::all();
-//        $list = Province::all()->where('');
-        $list = District::select('maqh')->where('matp', 79)->get();
-//        $list2 = WardsSeeder::all()->where('maqh', (int)$list[0]->maqh);
-//        return $list2;
-//        return $list;
-//        $list = District::all('maqh');
-//        $obj = json_decode($list, true);
-//        $list2 = District::select('maqh')->where('matp', 01)->get();
-//        $list2 = "";
-//        $list2[0] = WardsSeeder::all()->where('maqh', $list[0]->maqh);
 
-//        return $list2[1]->xaid;
-        $size = 0;
-        for ($i = 0; $i < count($list); $i++) {
-//            $list2[$i] = WardsSeeder::all()->where('maqh', (int)$list[$i]->maqh);
-            $list2[$i] = Wards::select('xaid', 'name', 'type', 'maqh')->where('maqh', $list[$i]->maqh)->get();
-            for ($j = 1; $j < count($list2[$i]); $j++) {
-                $list3[$size++] = $list2[$i][$j];
-            }
-        }
-
-//        return $list3;
-        return view('fetchseed', [
-            'list' => $list3
-        ]);
-        return $list2;
-
-    }
 
     public function getAllRestaurantHome(Request $request)
     {
