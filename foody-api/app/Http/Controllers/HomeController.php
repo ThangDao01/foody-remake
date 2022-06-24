@@ -22,7 +22,7 @@ class HomeController extends Controller
     {
         return Config::first();
     }
-    
+
     public function getProvince()
     {
         if (!Session::has("provincesId")) {

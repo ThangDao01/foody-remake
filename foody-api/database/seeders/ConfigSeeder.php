@@ -27,12 +27,11 @@ class ConfigSeeder extends Seeder
                 'more_information' => null,
                 'link_page' => '[{"social_network":"FaceBook","thumbnail:"","link":"https://www.facebook.com/shopeefoodvn"},
 	                             {"social_network":"Instagram","thumbnail:"","link":"https://www.instagram.com/foodysaigon"}]',
-                'link_download' => '[{"name":"App Foody iOS","thumbnail":"https://www.foody.vn/style/images/icons/ios-footer.png","link":"https://itunes.apple.com/app/id570435154"},
-                                     {"name":"App Foody Android","thumbnail":"https://www.foody.vn/style/images/icons/android-footer.png","link":"https://play.google.com/store/apps/details?id=com.foody.vn.activity"}]',
+                'link_download' => '[{"name":"App Foody iOS","thumbnail":"https://www.foody.vn/style/images/icons/ios-footer.png","fa_icon":"fa-apple","link_action":"https://itunes.apple.com/app/id570435154"},
+                                     {"name":"App Foody Android","thumbnail":"https://www.foody.vn/style/images/icons/android-footer.png","fa_icon":"fa-android","link_action":"https://play.google.com/store/apps/details?id=com.foody.vn.activity"}]',
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
                 'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
             ],
         ]);
-
     }
 }

@@ -215,6 +215,7 @@
 <script>
 export default {
   name: 'IndexPage',
+  layout: 'home-layout',
   data() {
     return {
       maxDeal: 0,
@@ -262,8 +263,12 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('scroll', this.scrollMenuEvent);
-    this.initData();
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+      window.addEventListener('scroll', this.scrollMenuEvent);
+      this.initData();
+      setTimeout(() => this.$nuxt.$loading.finish(), 5000)
+    })
   },
   methods: {
     initData() {

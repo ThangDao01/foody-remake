@@ -9,6 +9,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public function restaurant()
     {
         return $this->belongsToMany(Restaurant::class,'restaurant_categories');
