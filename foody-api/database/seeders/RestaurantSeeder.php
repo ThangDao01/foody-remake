@@ -22,7 +22,7 @@ class RestaurantSeeder extends Seeder
                 'restaurant_title' => null,
                 'restaurant_thumbnail' => 'https://images.foody.vn/res/g1/8934/prof/s1112x695/foody-upload-api-foody-mobile-1_-a3cc9934-210626094457.jpeg',
                 'restaurant_phone' => '',
-                'restaurant_discount' => null,
+                'restaurant_discount' => 0,
                 'restaurant_coordinate' => null,
                 'location_province' => 0,
                 'location_district' => 0,
