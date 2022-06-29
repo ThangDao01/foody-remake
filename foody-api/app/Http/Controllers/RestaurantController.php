@@ -32,14 +32,9 @@ class RestaurantController extends Controller
         if ($restaurant==null){
             return 0;
         }
-        return collect([
-            'restaurant' => $restaurant,
-            'category' => $restaurant->categories,
-            ]);
+        $restaurant->categories;
+        return $restaurant;
     }
-
-
-
     public function createRestaurant(Request $request)
     {
         $restaurant = new Restaurant();
@@ -60,9 +55,9 @@ class RestaurantController extends Controller
         $restaurant->categories()->saveMany(Category::whereIn('category_name',$request->get('categories'))->get());
         return 1;
     }
-    public function editRestaurant(Request $request)
+    public function editRestaurant(Request $request,$id)
     {
-        $object = Restaurant::where('id',$request->get('id'))->first();
+        $object = Restaurant::where('id',$id)->first();
         if (!$object){
             return 0;
         }
@@ -85,6 +80,7 @@ class RestaurantController extends Controller
         $object->total_save = $request->get('total_save');
         $object->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
         $object->save();
+        $object->categories()->saveMany(Category::whereIn('category_name',$request->get('categories'))->get());
         return 1;
     }
     public function deleteRestaurant($id){

@@ -197,7 +197,8 @@ export default {
   methods: {
     async initDataForm() {
      var uri = '/restaurant/id='+this.$route.params.id
-      this.this.createResult = await this.$axios.$get(uri);
+      this.createResult = await this.$axios.$get(uri);
+     console.log(this.createResult)
     },
     async setCategoryOption() {
       this.option_cate = await this.$axios.$get('category-name-all');
@@ -218,6 +219,7 @@ export default {
           source: list_category_option.ttAdapter()
         }
       });
+      
     },
     async getLocation() {
       this.location = await this.$axios.$get('location-all')
@@ -281,10 +283,11 @@ export default {
       this.createResult.categories = $('input[name="category"]').tagsinput('items');
       this.checkNewCate()
       console.log(this.createResult)
+      var uri = 'restaurant-edit/id='+this.$route.params.id;
 
-      var response = await this.$axios.$post('restaurant-create', this.createResult);
+      var response = await this.$axios.$post(uri, this.createResult);
       if (response==1){
-        alert("Create restaurant finish!")
+        alert("Update restaurant finish!")
         await this.$router.push('/admin/restaurant');
       }
     }
